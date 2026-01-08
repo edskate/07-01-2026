@@ -94,6 +94,51 @@ classDiagram
       theme: "default"
     });
   </script>
+
+    <div class="wrap">
+    <header>
+      <h1>Mermaid Class Diagram</h1>
+      <p>Abra este arquivo no navegador. Para editar, mude o texto dentro do bloco Mermaid.</p>
+    </header>
+
+    <div class="card">
+      <div class="mermaid">
+classDiagram
+    Engles <|-- Show
+    Engles 01 <|-- Look
+    Engles : + Before I hand him over I need to undrestand how it  affects..
+    Engles : + Told you to leave me alone 
+    Engles <|-- Cor
+    Engles 02: + I was at the office working
+    Engles 03 : +  After high school
+    Engles 04: + I can't go home
+    Engles : + Actually, in my office
+    class Machine{
+      +  (1)
+      + (2)
+      + (3)
+    }
+    class SocialMedia{
+      - Facebook
+      - Instagram
+    }
+    class Zebra{
+      + Run()
+      + Jump()
+    }
+      </div>
+
+      <div class="hint">Se o diagrama não aparecer, verifique se você está com internet (o Mermaid vem via CDN).</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default"
+    });
+  </script>
   <a href="index02.html">page 02</a>
 </body>
 </html>
