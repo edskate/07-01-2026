@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mermaid - Class Diagram</title>
+
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --card:#12121a;
+      --text:#ffffff;
+      --muted:#b9b9c6;
+      --border:#232336;
+    }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px;
+    }
+    .wrap{ max-width: 1100px; margin: 0 auto; }
+    header{ margin-bottom: 14px; }
+    h1{ margin:0 0 6px 0; font-size: 20px; }
+    p{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .card{
+      margin-top: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      overflow: auto;
+    }
+
+    /* O diagrama renderizado fica em SVG, então colocamos um fundo branco nele */
+    .mermaid{
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 14px;
+      display: inline-block;
+      min-width: 900px;
+    }
+
+    .hint{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Mermaid Class Diagram</h1>
+      <p>Abra este arquivo no navegador. Para editar, mude o texto dentro do bloco Mermaid.</p>
+    </header>
+
+    <div class="card">
+      <div class="mermaid">
+classDiagram
+    Animal <|-- Show
+    Animal <|-- Look
+    Animal <|-- Cor
+    Animal : + Good
+    Animal : + Live
+    Animal: + Kiss
+    Animal: + Sleep
+    class Machine{
+      + Start(1)
+      + Stop(2)
+      + Reset(3)
+    }
+    class SocialMedia{
+      - Facebook
+      - Instagram
+    }
+    class Zebra{
+      + Run()
+      + Jump()
+    }
+      </div>
+
+      <div class="hint">Se o diagrama não aparecer, verifique se você está com internet (o Mermaid vem via CDN).</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "default"
+    });
+  </script>
+</body>
+</html>
