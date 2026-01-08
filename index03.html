@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Kanban Editável com Salvamento</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:#fff;
+  margin:0;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+/* BOARD */
+.kanban{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+}
+
+/* COLUMN */
+.column{
+  width:280px;
+  background:#222;
+  border-radius:10px;
+  padding:10px;
+}
+
+.column h2{
+  text-align:center;
+  padding:10px;
+  border-radius:8px;
+  margin:0 0 10px;
+  font-size:15px;
+}
+
+/* CORES */
+.todo h2{background:#2196f3;}
+.progress h2{background:#ff9800;}
+.deploy h2{background:#9c27b0;}
+.test h2{background:#ffeb3b;color:#000;}
+.done h2{background:#4caf50;}
+.bug h2{background:#f44336;}
+
+/* CARD */
+.card{
+  background:#fff;
+  color:#000;
+  border-radius:8px;
+  padding:8px;
+  margin-bottom:8px;
+}
+
+.card textarea{
+  width:100%;
+  border:none;
+  resize:none;
+  font-size:14px;
+  outline:none;
+}
+
+.actions{
+  text-align:right;
+}
+
+.actions button{
+  background:#f44336;
+  border:none;
+  color:#fff;
+  padding:4px 8px;
+  font-size:11px;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.add-btn{
+  width:100%;
+  margin-top:6px;
+  padding:6px;
+  background:#000;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Kanban Editável (Auto Save)</h1>
+
+<div class="kanban" id="kanban"></div>
+
+<script>
+const defaultData = {
+  todo:["Create Documentation","Create Blog about the new diagram"],
+  progress:["Create renderer – works in all cases"],
+  deploy:["Design grammar"],
+  test:["Create parsing tests","Last item"],
+  done:["define getData","Update DB function"],
+  bug:["Weird flickering in Firefox"]
+};
+
+let data = JSON.parse(localStorage.getItem("kanbanData")) || defaultData;
+
+function save(){
+  localStorage.setItem("kanbanData", JSON.stringify(data));
+}
+
+function render(){
+  const board = document.getElementById("kanban");
+  board.innerHTML = "";
+
+  for(const col in data){
+    const div = document.createElement("div");
+    div.className = "column " + col;
+
+    div.innerHTML = `<h2>${col.toUpperCase()}</h2>`;
+
+    data[col].forEach((text, i)=>{
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <textarea>${text}</textarea>
+        <div class="actions">
+          <button>Remover</button>
+        </div>
+      `;
+
+      card.querySelector("textarea").oninput = e=>{
+        data[col][i] = e.target.value;
+        save();
+      };
+
+      card.querySelector("button").onclick = ()=>{
+        data[col].splice(i,1);
+        save();
+        render();
+      };
+
+      div.appendChild(card);
+    });
+
+    const add = document.createElement("button");
+    add.className = "add-btn";
+    add.innerText = "+ Adicionar Card";
+    add.onclick = ()=>{
+      data[col].push("Novo card");
+      save();
+      render();
+    };
+
+    div.appendChild(add);
+    board.appendChild(div);
+  }
+}
+
+render();
+</script>
+
+</body>
+</html>
